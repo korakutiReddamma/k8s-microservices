@@ -1,2 +1,4 @@
 Flask==2.3.2
 boto3==1.26.153
+prometheus_client
+werkzeug

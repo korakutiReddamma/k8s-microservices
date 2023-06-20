@@ -1,10 +1,13 @@
 from flask import Flask, jsonify
+from prometheus_client import make_wsgi_app, Counter
+from werkzeug.middleware.dispatcher import DispatcherMiddleware
 import threading
 import boto3
 import mysql.connector
 import json
 import os
 
+REQUEST_COUNT = Counter('flask_app_request_count', 'Total number of requests') 
 app = Flask(__name__)
 
 # AWS SQS configuration
@@ -76,7 +79,15 @@ def start_message_processing():
 @app.route('/')
 def insert_data():
     start_message_processing()
+    REQUEST_COUNT.inc()
     return jsonify({'message': 'Insert successfully.'})
 
+# Step 6: Create Prometheus WSGI Middleware
+app_dispatch = DispatcherMiddleware(app, {
+    '/metrics': make_wsgi_app()
+})
+
+# Step 7: Run the Flask Application
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000, threaded=True)
+    from werkzeug.serving import run_simple
+    run_simple('0.0.0.0', 5000, app_dispatch)
