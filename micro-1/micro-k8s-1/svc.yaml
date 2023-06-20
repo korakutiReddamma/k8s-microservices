@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: micro-svc-1-service
+spec:
+  selector:
+    app: micro-svc-1-deploy
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5000
+  type: LoadBalancer

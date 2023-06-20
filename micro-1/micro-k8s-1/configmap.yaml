@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: micro-svc-1-config
+data:
+  region: us-east-2
+  queue_url: https://sqs.us-east-2.amazonaws.com/315073111691/sqs-python

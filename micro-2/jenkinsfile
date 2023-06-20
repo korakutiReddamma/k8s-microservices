@@ -1,0 +1,17 @@
+pipeline {
+    agent any 
+    stages {
+        stage("build"){
+            steps {
+                script {
+            sh """
+            aws ecr get-login-password --region ap-southeast-2 | sudo docker login --username AWS --password-stdin 315073111691.dkr.ecr.ap-southeast-2.amazonaws.com
+            sudo docker build -t micro-svc-2 .
+            sudo docker tag micro-svc-2:latest 315073111691.dkr.ecr.ap-southeast-2.amazonaws.com/micro-svc-2:latest
+            sudo docker push 315073111691.dkr.ecr.ap-southeast-2.amazonaws.com/micro-svc-2:latest
+            """
+          }
+        }
+    }
+  }
+}

@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend-app
+  template:
+    metadata:
+      labels:
+        app: backend-app
+    spec:
+      containers:
+      - name: backend-app
+        image: 315073111691.dkr.ecr.us-east-2.amazonaws.com/micro-3:latest
+        ports:
+        - containerPort: 80
+        env:
+        - name: DB_USER
+          valueFrom:
+            configMapKeyRef:
+              name: backend-config
+              key: db-user
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: backend-config
+              key: db-host
+        - name: DB_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: backend-config
+              key: db-name
+        - name: TABLE_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: backend-config
+              key: db-table
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: backend-secret
+              key: db-password

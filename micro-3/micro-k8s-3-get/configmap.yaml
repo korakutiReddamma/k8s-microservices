@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backend-config
+data:
+  db-user: admin
+  db-host: database-2.c7o6esgncobt.us-east-2.rds.amazonaws.com
+  db-name: rdssqspy
+  db-table: sqsinfo
+
+

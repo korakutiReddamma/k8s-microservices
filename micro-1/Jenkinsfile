@@ -1,0 +1,18 @@
+pipeline {
+    agent any 
+    stages {
+        stage("build"){
+            steps {
+                script {
+            sh """
+            aws ecr get-login-password --region us-east-2 | sudo docker login --username AWS --password-stdin 315073111691.dkr.ecr.us-east-2.amazonaws.com
+            sudo docker build -t micro-1 .
+            sudo docker tag micro-1:latest 315073111691.dkr.ecr.us-east-2.amazonaws.com/micro-1:latest
+            sudo docker push 315073111691.dkr.ecr.us-east-2.amazonaws.com/micro-1:latest
+
+            """
+          }
+        }
+    }
+  }
+}

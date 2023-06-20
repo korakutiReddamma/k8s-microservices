@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: micro-svc-2-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: micro-svc-2-deploy
+  template:
+    metadata:
+      labels:
+        app: micro-svc-2-deploy
+    spec:
+      containers:
+      - name: micro-svc-2-container
+        image: 315073111691.dkr.ecr.us-east-2.amazonaws.com/micro-2:latest
+        ports:
+        - containerPort: 5000
+        envFrom:
+        - configMapRef:
+            name: micro-svc-2-config
+        - secretRef:
+            name: micro-svc-2-secrets
