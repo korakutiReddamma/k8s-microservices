@@ -3,6 +3,9 @@ from flask import Flask, render_template
 from prometheus_client import make_wsgi_app, Counter
 from werkzeug.middleware.dispatcher import DispatcherMiddleware
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 REQUEST_COUNT = Counter('flask_app_request_count', 'Total number of requests')  
 
@@ -25,7 +28,7 @@ database = os.getenv('DB_NAME', 'default-database')
 password = os.getenv('DB_PASSWORD')
 
 # Read table name from environment variable
-table_name = os.getenv('TABLE_NAME', 'default-table')
+table_name = os.getenv('DB_TABLE', 'default-table')
 
 @app.route('/')
 def index():

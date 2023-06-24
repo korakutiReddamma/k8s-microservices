@@ -3,3 +3,4 @@ mysql-connector-python
 Flask
 prometheus_client
 werkzeug
+python-dotenv==1.0.0

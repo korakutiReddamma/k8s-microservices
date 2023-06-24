@@ -6,6 +6,9 @@ import boto3
 import mysql.connector
 import json
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 REQUEST_COUNT = Counter('flask_app_request_count', 'Total number of requests') 
 app = Flask(__name__)

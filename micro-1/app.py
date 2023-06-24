@@ -4,15 +4,17 @@ from werkzeug.middleware.dispatcher import DispatcherMiddleware
 import boto3
 import json
 import os
+from dotenv import load_dotenv
 
+load_dotenv()
 # Step : Define Prometheus Metrics
 REQUEST_COUNT = Counter('flask_app_request_count', 'Total number of requests')  # Add the 'route' label
 app = Flask(__name__)
 
 
 # AWS SQS configuration
-region = os.environ.get('region')
-queue_url = os.environ.get('queue_url')
+region = os.environ.get('AWS_REGION')
+queue_url = os.environ.get('QUEUE_URL')
 
 
 # Create an SQS client
